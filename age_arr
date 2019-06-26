@@ -1,1 +1,55 @@
+#include <iostream>
+#include <stdlib.h>
+#include <queue>
+#include <algorithm>
+#include <functional>
+#include <string>
+using namespace std;
 
+class member
+{
+public:
+	char name[100];
+	int age;
+	int order;
+};
+int comp(const member p1, const member p2)
+{
+	if (p1.age == p2.age)
+	{
+		return p1.order < p2.order;
+	}
+	else
+		return p1.age < p2.age;
+}
+member arr[100000];
+int main()
+{
+	int n;
+	char na[100] = { '0' };
+	int a;
+	int cnt = 1;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> a >> na;
+		arr[i].age = a;
+		for (int j = 0; j < 100; j++)
+		{
+			if (na[j] == '0')
+				break;
+			else
+				arr[i].name[j] = na[j];
+		}
+		arr[i].order = cnt;
+		cnt++;
+	}
+
+	sort(arr, arr + n, comp);
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << arr[i].age << " " << arr[i].name << '\n';
+	}
+}
