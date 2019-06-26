@@ -1,1 +1,30 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
 
+using namespace std;
+
+class word
+{
+public:
+	string in;
+	int lng;
+};
+bool comp(const word p1, const word p2)
+{
+
+}
+word arr[20000];
+int main()
+{
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i].in;
+		arr[i].lng = arr[i].in.length();
+	}
+
+	return 0;
+}
