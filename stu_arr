@@ -14,42 +14,44 @@ public:
 	int kor;
 	int eng;
 	int math;
-	bool operator <(student &t)
+	/*bool operator <(student &t)
 	{
 		if ((kor - t.kor) == 0)
 		{
 			if (eng - t.eng == 0)
 			{
 				if (math - t.math == 0)
-					return ((t.name).compare(name));
+					return name <t.name;
 				else
-				return math - t.math;
+					return math - t.math;
 			}
 			else
-			return eng - t.eng;
+				return eng - t.eng;
 		}
 		else
 			return kor - t.kor;
-	}
+	}*/
 };
-int comp(const student*p1, const student * p2)
+int comp(const student p1, const student p2)
 {
-	if ((p1->kor - p2->kor) == 0)
+	if ((p1.kor - p2.kor) == 0)
 	{
-		if (p1->eng - p2->eng == 0)
+		if (p1.eng - p2.eng == 0)
 		{
-			if (p1->math - p2->math == 0)
-				return p1->name < p2->name;
+			if (p1.math - p2.math == 0)
+			{
+				return p1.name < p2.name;
+			}
 			else
-				return p1->math < p2->math;
+				return p1.math > p2.math;
 		}
 		else
-			return p1->eng < p2->eng;
+			return p1.eng < p2.eng;
 	}
 	else
-		return p1->kor < p2->kor;
+		return p1.kor > p2.kor;
 }
-student *arr[100];
+student arr[100000];
 int main()
 {
 	int n;
@@ -57,27 +59,24 @@ int main()
 	int k;
 	int e;
 	int m;
-	
-	cin >> n;
 
-	for (int i = 0; i < n; i++)
-	{
-		cin >> name>>k>>e>>m;
-		arr[i] = new student;
-		arr[i]->name = name;
-		arr[i]->kor = k;
-		arr[i]->eng = e;
-		arr[i]->math = m;
-	}
-	sort(arr, arr + n,comp);
+		cin >> n;
+		for (int i = 0; i < n; i++)
+		{
+			cin >> name >> k >> e >> m;
+			arr[i].name = name;
+			arr[i].kor = k;
+			arr[i].eng = e;
+			arr[i].math = m;
+		}
+		sort(arr, arr + n, comp);
+		for (int i = 0; i < n; i++)
+		{
+			cout << arr[i].name <<'\n';
+		}
 
-	for (int i = 0; i < n; i++)
-	{
-		cout << arr[i]->name << endl;
-	}
-
-	for (int i = 0; i, n; i++)
-		delete arr[i];
+	//for (int i = 0; i, n; i++)
+	//	delete arr[i];
 
 	return 0;
 }
