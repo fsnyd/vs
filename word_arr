@@ -12,7 +12,11 @@ public:
 };
 bool comp(const word p1, const word p2)
 {
-
+	if (p1.lng == p2.lng)
+	{
+		return p1.in < p2.in;
+	}
+	return p1.lng < p2.lng;
 }
 word arr[20000];
 int main()
@@ -24,6 +28,13 @@ int main()
 	{
 		cin >> arr[i].in;
 		arr[i].lng = arr[i].in.length();
+	}
+	sort(arr, arr + n, comp);
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i - 1].in == arr[i].in)
+			continue;
+		cout << arr[i].in << '\n';
 	}
 
 	return 0;
