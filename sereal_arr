@@ -1,1 +1,54 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <cstring>
+using namespace std;
+class real
+{
+public:
+	char num[50];
+};
+bool comp(const real p1,const  real p2)
+{
+	int tmp1 = 0;
+	int tmp2 = 0;
+	if (strlen(p1.num) == strlen(p2.num))
+	{
+		for (int i = 0; i < strlen(p1.num); i++)
+		{
+			if (p1.num[i] >= '1'&& p1.num[i] <= '9')
+			{
+				tmp1 = tmp1 +(int) (p1.num[i] - '0');
+			}
+			if (p2.num[i] >= '1'&& p2.num[i] <= '9')
+			{
+				tmp2 = tmp2 +(int) (p2.num[i] - '0');
+			}
+		}
+		if (tmp1 == tmp2)
+			return p1.num < p2.num;
 
+		return tmp1 < tmp2;
+	}
+	else
+	return strlen(p1.num) < strlen(p2.num);
+}
+real arr[1000];
+int main()
+{
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i].num;
+	}
+
+	sort(arr, arr + n, comp);
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << arr[i].num << '\n';
+	}
+	return 0;
+}
