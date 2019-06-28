@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int arr[1001] = { 0 };
+double sqrt(double val, double dis)
+{
+	double pre = 1;
+	double next;
+	while (1)
+	{
+		next = 0.5*(pre + (val / pre));
+
+		if ((abs(next - pre)) < dis)
+		{
+			break;
+		}
+		pre = next;
+	}
+
+	return next;
+}
+
+int main()
+{
+	int a;
+	cin >> a;
+	
+	cout<<(double)sqrt(a, 0.00001)<<'\n';
+	cout <<(double) (sqrt(a, 0.0001)*sqrt(a, 0.0001)) << '\n';
+
+	return 0;
+}
