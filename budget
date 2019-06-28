@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int arr[10005];
+
+int main()
+{
+	int n;
+	int budget = 0;//예상 총 예산
+	int middle; //가용가능 당 예산
+	int cnt=0;
+	int max;//가용가능 예산
+	int tmp=0;
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i];
+		budget = budget + arr[i];
+	}
+	cin >> max;
+	middle = max / n;
+	
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] < middle)
+		{
+			tmp = tmp + arr[i];
+			cnt++;
+		}
+	}
+	if (cnt == n)
+	{
+		max = arr[0];
+		for (int i = 0; i < n-1; i++)
+		{
+			if (arr[i + 1]>max)
+				max = arr[i + 1];
+		}
+		cout << max;
+
+		return 0;
+	}
+	tmp = max - tmp;
+	tmp = tmp / (n-cnt);
+
+	cout << tmp;
+
+	return 0;
+}
