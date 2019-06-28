@@ -16,7 +16,7 @@ int main()
 	}
 	for(int i=2;i<=sqrt(1001);i++)
 	{
-		for(int j=2;j<=1001;j++)
+		for(int j=i*i;j<=1001;j++)
 		{
 			if(arr[j]==0 && j%i==0 && j>i)
 			arr[j]=1;
