@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+bool arr[1000005];
+
+int main()
+{
+	int min;
+	int max;
+	cin >> min>>max;
+	arr[0] = 1;
+	arr[1] = 1;
+	for (int i = 2; i <= sqrt(max); i++)
+	{
+		for (int j = i*i; j <= max; j++)
+		{
+			if (arr[j] == 0 && j%i == 0 && j>i)
+				arr[j] = 1;
+		}
+
+	}
+
+	for (int i = min; i <= max; i++)
+	{
+		if (arr[i] == 0)
+			cout <<i << '\n';
+	}
+
+	return 0;
+}
