@@ -1,1 +1,52 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+using namespace std;
+
+class player
+{
+public:
+	int clr;
+	int size;
+	int order;
+	int sum;
+};
+player *arr[200005];
+player r_arr[200005];
+bool comp1(player *p1, player* p2)
+{
+	return p1->size < p2->size;
+}
+int main()
+{
+	int n;
+	int cnt = 0;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		arr[i] = &r_arr[i];
+		cin >> arr[i]->clr >> arr[i]->size;
+		arr[i]->order = cnt;
+		cnt++;
+	}
+	sort(arr, arr + n, comp1);
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (arr[i]->size > arr[j]->size && arr[i]->clr != arr[j]->clr)
+			{
+				arr[i]->sum = arr[i]->sum + arr[j]->size;
+			}
+		}
+	}
+	
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d \n", r_arr[i].sum);
+	}
+
+	return 0;
+}
