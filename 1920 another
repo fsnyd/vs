@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class box
+{
+public:
+	int val;
+	bool state;
+};
+box arr[100005];
+box * f_arr[100005];
+box res[100005];
+box * f_res[100005];
+bool binary(box arr1[],int l,int r, int a)
+{
+	int left = l;
+	int right = r;
+	int mid;
+	for (int i = 0; i < r + 1; i++)
+	{
+		cout << arr1[i].val << ' ';
+	}
+	cout << '\n';
+	while (right >= left)
+	{
+		mid = left + (right - left) / 2;
+
+		if (arr1[mid].val == a)
+			return 1;
+		if (arr1[mid].val < a)
+		{
+			left = mid+1;
+		}
+		if (arr1[mid].val > a)
+		{
+			right = mid-1;
+		}
+	} 
+
+	return 0;
+}
+bool comp(box *p1, box *p2)
+{
+	return p1->val < p2->val;
+}
+int main()
+{
+	int n;
+	int m;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i].val;
+		f_arr[i] = &arr[i];
+	}
+	
+	sort(f_arr, f_arr + n, comp);
+	
+	cin >> m;
+
+	for (int i = 0; i < m; i++)
+	{
+		cin >> res[i].val;
+		f_res[i] = &res[i];
+	}
+	
+	sort(f_res, f_res + m, comp);
+	for (int i = 0; i < n; i++)
+	{
+		cout << f_arr[i]->val << ' ';
+	}
+	cout << endl;
+	for (int i = 0; i < m; i++)
+	{
+		f_res[i]->state=binary(*f_arr, 0, n-1, f_res[i]->val);
+	}
+	for (int i = 0; i < m; i++)
+	{
+		cout << res[i].state << '\n';
+	}
+
+	return 0;
+}
+//why pointer doesnt work
