@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class box
+{
+public:
+	int val;
+	bool state;
+};
+box arr[100005];
+box res[100005];
+int main()
+{
+	int n;
+	int m;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i].val;
+	}
+	cin >> m;
+
+	for (int i = 0; i < m; i++)
+	{
+		cin >> res[i].val;
+		for (int j = 0; j < n; j++)
+		{
+			if (res[i].val == arr[j].val)
+			{
+				res[i].state = true;
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		cout << res[i].state << '\n';
+	}
+
+	return 0;
+}
