@@ -14,34 +14,34 @@ box arr[100005];
 box * f_arr[100005];
 box res[100005];
 box * f_res[100005];
-bool binary(box arr1[],int l,int r, int a)
-{
-	int left = l;
-	int right = r;
-	int mid;
-	for (int i = 0; i < r + 1; i++)
-	{
-		cout << arr1[i].val << ' ';
-	}
-	cout << '\n';
-	while (right >= left)
-	{
-		mid = left + (right - left) / 2;
-
-		if (arr1[mid].val == a)
-			return 1;
-		if (arr1[mid].val < a)
-		{
-			left = mid+1;
-		}
-		if (arr1[mid].val > a)
-		{
-			right = mid-1;
-		}
-	} 
-
-	return 0;
-}
+//bool binary(box arr1[],int l,int r, int a)
+//{
+//	int left = l;
+//	int right = r;
+//	int mid;
+//	for (int i = 0; i < r + 1; i++)
+//	{
+//		cout << arr1[i].val << ' ';
+//	}
+//	cout << '\n';
+//	while (right >= left)
+//	{
+//		mid = left + (right - left) / 2;
+//
+//		if (arr1[mid].val == a)
+//			return 1;
+//		if (arr1[mid].val < a)
+//		{
+//			left = mid+1;
+//		}
+//		if (arr1[mid].val > a)
+//		{
+//			right = mid-1;
+//		}
+//	} 
+//
+//	return 0;
+//}
 bool comp(box *p1, box *p2)
 {
 	return p1->val < p2->val;
@@ -50,6 +50,7 @@ int main()
 {
 	int n;
 	int m;
+	int mid;
 	cin >> n;
 
 	for (int i = 0; i < n; i++)
@@ -69,14 +70,30 @@ int main()
 	}
 	
 	sort(f_res, f_res + m, comp);
-	for (int i = 0; i < n; i++)
-	{
-		cout << f_arr[i]->val << ' ';
-	}
-	cout << endl;
+	int left=0;
+	int right=n-1;
 	for (int i = 0; i < m; i++)
 	{
-		f_res[i]->state=binary(*f_arr, 0, n-1, f_res[i]->val);
+		while (right >= left)
+		{
+			mid = left + (right - left) / 2;
+
+			if (f_arr[mid]->val == f_res[i]->val)
+			{
+				f_res[i]->state = true;
+				break;
+			}
+			if (f_arr[mid]->val < f_res[i]->val)
+			{
+				left = mid + 1;
+			}
+			if (f_arr[mid]->val > f_res[i]->val)
+			{
+				right = mid - 1;
+			}
+		}
+		left = 0;
+		right = n - 1;
 	}
 	for (int i = 0; i < m; i++)
 	{
@@ -85,4 +102,3 @@ int main()
 
 	return 0;
 }
-//why pointer doesnt work
