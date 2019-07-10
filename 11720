@@ -1,0 +1,19 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(void)
+{
+	int n;
+	int sum = 0;
+	string arr;
+	cin >> n;
+	cin >> arr;
+
+	for (int i = 0; i < n; i++)
+	{
+		sum = sum + stoi(arr.substr(i, 1));
+	}
+	cout << sum;
+	return 0;
+}
