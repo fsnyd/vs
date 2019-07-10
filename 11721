@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+using namespace std;
+char arr[105];
+int main(void)
+{
+	char tmp;
+	int size = 0;
+	while (1)
+	{
+		cin.get(tmp);
+		if (tmp == '\n')
+			break;
+		arr[size] = tmp;
+		size++;
+	}
+	for (int i = 0; i < size; i++)
+	{
+		if (i % 10 == 0)
+			cout << '\n';
+		cout << arr[i];
+	}
+	return 0;
+}
