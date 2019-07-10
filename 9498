@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main(void)
+{
+	int n;
+	char res = 'F';
+	cin >> n;
+
+	if (n >= 60)
+	{
+		if (n >= 70)
+		{
+			if (n >= 80)
+			{
+				if (n >= 90)
+					res = 'A';
+				res = 'B';
+			}
+			res = 'C';
+		}
+		res = 'D';
+	}
+	cout << res;
+	return 0;
+}
