@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int arr[100005];
+int main(void)
+{
+	int a;
+	int b;
+	int c;
+	int mid=0;
+	cin >> a >> b >> c;
+
+	if (a >= b)
+	{
+		if (b >= c)
+			mid = b;
+		if (c >= a)
+			mid = a;
+	}
+	if (a >= c)
+	{
+		if (c >= b)
+			mid = c;
+		if (b >= a)
+			mid = a;
+	}
+	if (b >= a)
+	{
+		if (a >= c)
+			mid = a;
+		if (c >= b)
+			mid = b;
+	}
+	if (b >= c)
+	{
+		if (c >= a)
+			mid = c;
+		if (a >= b)
+			mid = b;
+	}
+	if (c >= a)
+	{
+		if (a >= b)
+			mid = a;
+		if (b >= c)
+			mid = c;
+	}
+	if (c >= b)
+	{
+		if (b >= a)
+			mid = b;
+		if (a >= c)
+			mid = c;
+	}
+	cout << mid;
+	return 0;
+}
