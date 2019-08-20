@@ -1,59 +1,42 @@
 #include <iostream>
 
 using namespace std;
-int arr[100];
+int arr[10];
 int cnt = 0;
-void func(int depth,int n)
+int chk = 0;
+void func(int n, int depth)
 {
-	if (depth == n)
+	if (depth == cnt)
 	{
-		for (int i = 0; i < n; i++)
+
+		for (int i = 0; i < cnt; i++)
 		{
-			/*for (int j = 0; j < n - 1; j++)
-			{
-				if (arr[j] == arr[j + 1])
-				{
-					cnt++;
-					break;
-				}
-				if (arr[0] == arr[n-1])
-				{
-					cnt++;
-					break;
-				}
-			}
-			if (cnt ==0)*/
-			cout << arr[i]<<" ";
+			printf("%d ", arr[i]);
 		}
-	/*	if (cnt == 0)*/
-		cout << endl;
-		cnt = 0;
-		return;
+		printf("\n");
+		return ;
 	}
-//	system("pause");
-	for (int i = 1; i < 7; i++)
+	for (int i = 1; i <= n; i++)
 	{
-		cnt = 0;
+		chk = 0;
 		for (int j = 0; j < depth; j++)
 		{
 			if (arr[j] == i)
-			{
-				cnt = 1;
-				break;
-			}
+				chk++;
 		}
-		if (cnt == 1)
+		if (chk == 1)
 			continue;
 		arr[depth] = i;
-		func(depth+1,n);
+		func(n, depth + 1);
 	}
 }
 int main()
 {
-	int n;
-	int m;
-	cin >> n;
+	int n, m;
 
-	func(0,n);
+	cin >> n >> m;
+	cnt = m;
+	func(n, 0);
+
 	return 0;
 }
