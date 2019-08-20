@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+char stack[100000];
+int top = -1;
+int isEmty()
+{
+	if (top == -1)
+		return 1;
+	else
+		return 0;
+}
+void push(char val)
+{
+	if (val == ')')
+	{
+		if (stack[top] == '(')
+		{
+			pop();
+			return;
+		}
+
+	}
+	if (val == '}')
+	{
+		if (stack[top] == '{')
+		{
+			pop();
+			return;
+		}
+	}
+	if (val == ']')
+	{
+		if (!stack[top] == '[')
+		{
+			pop();
+			return;
+		}
+	}
+	top++;
+	stack[top] = val;
+}
+int pop()
+{
+	if (isEmty())
+	{
+		cout << "emty space";
+		return 0;
+	}
+	char a = stack[top];
+	top--;
+
+	return a;
+}
+char peek()
+{
+	return stack[top];
+}
+int main()
+{
+	return 0;
+}
