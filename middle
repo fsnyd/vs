@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+int h, w;
+int map[200][200];
+typedef struct pos
+{
+	int x;
+	int y;
+}pos;
+int visit[200][200];
+pos queue[20000];
+int front = -1;
+int rear = -1;
+int isEmpty()
+{
+	if (front == rear)
+		return 1;
+	else
+		return 0;
+}
+void enqueue(pos p)
+{
+	rear++;
+	queue[rear] = p;
+}
+pos dequeue()
+{
+	if (!isEmpty())
+	{
+		front++;
+		pos a = queue[front];
+		return a;
+	}
+}
+int main()
+{
+	scanf("%d %d", &h, &w);
+	for (int i = 1; i <= h; i++)
+	{
+		for (int j = 1; j <= w; j++)
+		{
+			scanf("%1d", &map[i][j]);
+		}
+	}
+	pos start = { 1.1 };
+	enqueue(start);
+	visit[1][1] = 1;
+	while (!isEmpty())
+	{
+		pos t = dequeue();
+
+		pos left{ t.x - 1, t.y };
+		if (map[left.y][left.x] == 1 && visit[t.y][t.x] == 0)
+		{
+			enqueue(left);
+			visit[left.y][left.x] = visit[t.y][t.x] + 1;
+		}
+		pos right{ t.x + 1, t.y };
+		if (map[right.y][right.x] == 1 && visit[t.y][t.x] == 0)
+		{
+			enqueue(right);
+			visit[right.y][right.x] = visit[t.y][t.x] + 1;
+		}
+		pos up{ t.x, t.y-1 };
+		if (map[up.y][up.x] == 1 && visit[t.y][t.x] == 0)
+		{
+			enqueue(up);
+			visit[up.y][up.x] = visit[t.y][t.x] + 1;
+		}
+		pos down{ t.x , t.y+1 };
+		if (map[down.y][down.x] == 1 && visit[t.y][t.x] == 0)
+		{
+			enqueue(down);
+			visit[down.y][down.x] = visit[t.y][t.x] + 1;
+		}
+		///반복문 버전
+		int dx[] = { 1, -1, 0, 0 };
+		int dy[] = { 0, 0, 1, -1 };
+		for (int i = 0; i, 4; i++)
+		{
+			pos next = { t.x + dx[i], t.y + dy[i] };
+			if (map[next.y][next.x] == 1 && visit[t.y][t.x] == 0)
+			{
+				enqueue(next);
+				visit[next.y][next.x] = visit[t.y][t.x] + 1;
+			}
+		}
+	}
+	return 0;
+}
