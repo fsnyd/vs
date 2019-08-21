@@ -1,0 +1,82 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+int h, w,c;
+int map[50][50];
+typedef struct pos
+{
+	int x;
+	int y;
+}pos;
+int visit[200][200];
+pos queue[20000];
+int front = -1;
+int rear = -1;
+int isEmpty()
+{
+	if (front == rear)
+		return 1;
+	else
+		return 0;
+}
+void enqueue(pos p)
+{
+	rear++;
+	queue[rear] = p;
+}
+pos dequeue()
+{
+	if (!isEmpty())
+	{
+		front++;
+		return queue[front];
+	}
+}
+int dx[] = { 1, -1, 0, 0 };
+int dy[] = { 0, 0, 1, -1 };
+void bfs(int x, int y)
+{
+	enqueue({ x, y });
+	map[y][x] = 0;
+	while (!isEmpty())
+	{
+		pos t = dequeue();
+		for (int i = 0; i<4; i++)
+		{
+			pos next = { t.x + dx[i], t.y + dy[i] };
+				if (next.x >= 0 && next.x < w &&next.y >= 0 && next.y < h)
+				{
+					enqueue({ next.x, next.y });
+					map[next.x][next.y] = 0;
+				}
+		};
+	}
+}
+int main()
+{
+	int tc;
+	int cnt=0;
+	scanf_s("%d", &tc);
+	for (int t = 0; t < tc; t++)
+	{
+		scanf_s("%d %d %d", &w, &h, &c);
+		for (int i = 0; i < c; i++)
+		{
+			int x, y;
+			scanf_s("%d %d", &x, &y);
+			map[y][x]=1;
+		}
+		int ans = 0;
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				if (map[i][j])
+				{
+					bfs(i, j);
+					ans++;
+				}
+			}
+		}
+	}
+}
