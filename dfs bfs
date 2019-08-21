@@ -1,0 +1,102 @@
+#include <iostream>
+
+using namespace std;
+int map[1005][1005] = { 0 };
+int queue[10005];
+int front = -1;
+int rear = -1;
+int visit1[10005] = { 0 };
+int visit2[10005] = { 0 };
+int cnt = 0;
+void enqueue(int val)
+{
+	rear++;
+	queue[rear] = val;
+}
+int isEmpty()
+{
+	if (front == rear)
+		return 1;
+	else
+		return 0;
+}
+int dequeue()
+{
+	if (!isEmpty())
+	{
+		front++;
+		int a = queue[front];
+		return a;
+	}
+}
+void func(int start, int n)
+{
+	enqueue(start);
+	visit1[start] = 1;
+	cout << start <<" ";
+	while (!isEmpty())
+	{
+		int num;
+		num = dequeue();
+		for (int i = 1; i <= n; i++)
+		{
+			if (!visit1[i]&&map[num][i])
+			{
+				enqueue(i);
+				visit1[i] = 1;
+				cout <<i << " ";
+			}
+		}
+	}
+	/*if (cnt == n)
+		return;
+	for (int i = 1; i <= n; i++)
+	{
+		if (map[start][i] == 1 && visit[i] == 0)
+		{
+			enqueue(start);
+			cnt = i;
+			visit[i] = 1;
+			break;
+		}
+	}
+	cout << start << " ";
+	func(cnt, n);*/
+}
+void fun(int start,int n)
+{
+	visit2[start] = 1;
+	cout << start <<" ";
+	for (int i = 1; i <= n; i++)
+	{
+		if (!visit2[i]&&map[start][i])
+			fun(i, n);
+	}
+}
+int main()
+{
+	int n,m, a, b, start;
+
+	cin >> n>>m>>start;
+
+	for (int i = 0; i < m; i++)
+	{
+		cin >> a >> b;
+		map[a][b] = 1;
+		map[b][a] = 1;
+	}
+
+	/*for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			cout << map[i][j] << " ";
+		}
+		cout << endl;
+	}
+	*/
+	fun(start, n);
+	cout << endl;
+	func(start, n);
+	return 0;
+}
