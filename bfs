@@ -1,0 +1,91 @@
+#include <iostream>
+
+using namespace std;
+int map[10][10] = { 0 };
+int queue[10];
+int front = -1;
+int rear = -1;
+int visit[10] = { 0 };
+int cnt = 0;
+void enqueue(int val)
+{
+	rear++;
+	queue[rear] = val;
+}
+int isEmpty()
+{
+	if (front == rear)
+		return 1;
+	else
+		return 0;
+}
+int dequeue()
+{
+	if (!isEmpty())
+	{
+		front++;
+		int a = queue[front];
+		return a;
+	}
+}
+void func(int start, int n)
+{
+	enqueue(start);
+	visit[start] = 1;
+	cout << start << endl;
+	while (!isEmpty())
+	{
+		int num;
+		num = dequeue();
+		for (int i = 1; i <= n; i++)
+		{
+			if (!visit[i]&&map[num][i])
+			{
+				enqueue(i);
+				visit[i] = 1;
+				cout <<i << endl;			}
+		}
+	}
+	/*if (cnt == n)
+		return;
+	for (int i = 1; i <= n; i++)
+	{
+		if (map[start][i] == 1 && visit[i] == 0)
+		{
+			enqueue(start);
+			cnt = i;
+			visit[i] = 1;
+			break;
+		}
+	}
+	cout << start << " ";
+	func(cnt, n);*/
+}
+int main()
+{
+	int n, a, b, start;
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> a >> b;
+		map[a][b] = 1;
+		map[b][a] = 1;
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			cout << map[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << "start?";
+	cin >> start;
+
+	func(start, n);
+
+	return 0;
+}
