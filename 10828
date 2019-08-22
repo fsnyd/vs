@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int stack[10005];
+int top = -1;
+int isEmpty()
+{
+	if (top == -1)
+		return 1;
+	else
+		return 0;
+}
+void push(int val)
+{
+	top++;
+	stack[top] = val;
+}
+int pop()
+{
+	int a = stack[top];
+	top--;
+	return a;
+}
+int peek()
+{
+	return stack[top];
+}
+void who1(string word)
+{
+	int a;
+	if (word == "pop")
+	{
+		if (isEmpty())
+			cout << top << endl;
+		else
+			cout << pop() << endl;
+	}
+	if (word == "size")
+	{
+		cout << top+1 << endl;
+	}
+	if (word == "empty")
+	{
+		if (isEmpty())
+			cout << "1" << endl;
+		else
+			cout << "0" << endl;
+	}
+	if (word == "top")
+	{
+		if (isEmpty())
+			cout << "-1" << endl;
+		else
+		cout << peek() << endl;
+	}
+}
+void who2(string word, int val)
+{
+	push(val);
+}
+int main()
+{
+	int n;
+	int pos;
+	string line;
+	string com;
+	int num=0;
+	cin >> n;
+	cin.ignore();
+	for (int i = 0; i < n; i++)
+	{
+		getline(cin, line);
+		pos = 0;
+		for (int i = 0; i < line.length(); i++)
+		{
+			if (line[i] == ' ')
+			{
+				pos = i;
+				com = line.substr(0, pos);
+				num = stoi(line.substr(pos + 1));
+				who2(com, num);
+				break;
+			}
+		}
+		if(pos==0)
+		who1(line);
+	}
+
+	return 0;
+}
