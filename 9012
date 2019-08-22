@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+using namespace std;
+char stack[100];
+int top = -1;
+int cnt = 0;
+int isEmpty()
+{
+	if (top == -1)
+		return 1;
+	else
+		return 0;
+}
+void push(char sign)
+{
+	top++;
+	stack[top] = sign;
+}
+char pop()
+{
+	char test = stack[top];
+	top--;
+	return test;
+}
+void func(char word)
+{
+	if (word == '(')
+	{
+		push(word);
+	}
+	if (word == ')')
+	{
+		if (isEmpty())
+		{
+			cnt++;
+		}
+		else
+		{
+			pop();
+		}
+	}
+}
+int main()
+{
+	int n;
+	char c;
+	string w;
+	cin >> n;
+	cin.ignore();
+	while (n)
+	{
+		cnt = 0;
+		top = -1;
+		do
+		{
+			cin.get(c);
+			func(c);
+		} while (c != '\n');
+		n--;
+		if (!isEmpty())
+		{
+			cout << "NO" << endl;
+			continue;
+		}
+		if (cnt)
+		{
+			cout << "NO" << endl;
+			continue;
+		}
+		else
+		{
+			cout << "YES" << endl;
+			continue;
+		}
+	}
+	return 0;
+}
