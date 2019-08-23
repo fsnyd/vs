@@ -1,0 +1,46 @@
+#include <iostream>
+
+using namespace std;
+
+int point[1000005];
+
+int find_set(int val)
+{
+	if (point[val] != val)
+		point[val] = find_set(point[val]);
+	return point[val];
+}
+void union_set(int val1,int val2)
+{
+	point[find_set(val1)] = find_set(val2);
+}
+int main()
+{
+	int n, m;
+	int a, b, c;
+	scanf("%d %d", &n, &m);
+	for (int i = 0; i <= n; i++)
+	{
+		point[i] = i;
+	}
+	for (int i = 0; i < m; i++)
+	{
+		scanf("%d %d %d", &a,&b,&c);
+		if (a == 0)
+		{
+			union_set(b,c);
+		}
+		if (a == 1)
+		{
+			if (find_set(b)==find_set(c))
+			{
+				printf("%s\n", "YES");
+			}
+			else
+			{
+				printf("%s\n", "NO");
+			}
+		}
+	}
+	return 0;
+}
