@@ -1,0 +1,61 @@
+#include <iostream>
+#include <map>
+using namespace std;
+map<string, int> nameDate;
+int idxCount = 0;
+int relation[100005];
+int cnt = 0;
+int getIdx(string name)
+{
+	if (nameDate.count(name) == 0)
+	{
+		nameDate[name] = idxCount;
+		idxCount++;
+		return idxCount - 1;
+	}
+	return nameDate[name];
+}
+void addName(string name)
+{
+	nameDate[name] = idxCount;
+	idxCount++;
+}
+int find_set(int val)
+{
+	if (relation[val] != val)
+		relation[val] = find_set(relation[val]);
+	cnt++;
+	return relation[val];
+}
+void func(int a, int b)
+{
+	relation[find_set(a)] = find_set(b);
+}
+int main()
+{
+	int n, m;
+	int a, b;
+	string word1,word2;
+
+	cin >> n;
+	while (n)
+	{
+		cin >> m;
+		for (int i = 1; i <= 2*m; i++)
+		{
+			relation[i] = i;
+		}
+		for (int i = 0; i < m; i++)
+		{
+			cnt = 0;
+			cin >> word1 >> word2;
+			a = getIdx(word1);
+			b = getIdx(word2);
+			func(b,a);
+			cout << cnt << endl;
+		}
+		n--;
+	}
+	return 0;
+}
+////미완성
