@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+vector<int>arr[50005];
+queue<int>q;
+int visit[50001];
+class node
+{
+public:
+	int parent;
+	int depth;
+	int data;
+};
+node tree[50001];
+int moveTodepth(int a, int depth)
+{
+	while (tree[a].depth != depth)
+	{
+		a = tree[a].parent;
+	}
+	return a;
+}
+int LCA(int a, int b)
+{
+	int t;
+	if (tree[a].depth != tree[b].depth)
+	{
+		if (tree[a].depth < tree[b].depth)
+		{
+			t = moveTodepth(b, tree[a].depth);
+		}
+		if (tree[a].depth > tree[b].depth)
+		{
+			t = moveTodepth(a, tree[b].depth);
+		}
+	}
+	else
+		return ;
+	return t;
+}
+int main()
+{
+	int n, m;
+	int a, b;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		arr[i].push_back(i);
+	}
+	for (int i = 1; i < n; i++)
+	{
+		cin >> a >> b;
+		arr[a].push_back(b);
+		arr[b].push_back(a);
+	}
+	q.push(1);
+	visit[1] = 1;
+	while (!q.empty())
+	{
+		int t = q.front();
+		q.pop();
+		for (int i = 0; i < arr[t].size(); i++)
+		{
+			int n = arr[t][i];
+			if (!visit[n])
+			{
+				tree[n].parent = t;
+				tree[n].depth = tree[t].depth + 1;
+				q.push(n);
+				visit[n] = 1;
+			}
+		}
+	}
+	return 0;
+}// 하는중
