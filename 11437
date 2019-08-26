@@ -23,24 +23,28 @@ int moveTodepth(int a, int depth)
 }
 int LCA(int a, int b)
 {
-	int t;
 	if (tree[a].depth != tree[b].depth)
 	{
 		if (tree[a].depth < tree[b].depth)
 		{
-			t = moveTodepth(b, tree[a].depth);
+			b=moveTodepth(b, tree[a].depth);
 		}
 		if (tree[a].depth > tree[b].depth)
 		{
-			t = moveTodepth(a, tree[b].depth);
+			a=moveTodepth(a, tree[b].depth);
 		}
 	}
-	else
-		return ;
-	return t;
+	while (a != b)
+	{
+		a = tree[a].parent;
+		b = tree[b].parent;
+	}
+
+	return a;
 }
 int main()
 {
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	int n, m;
 	int a, b;
 	cin >> n;
@@ -72,5 +76,11 @@ int main()
 			}
 		}
 	}
+	cin >> m;
+	for (int i = 0; i < m; i++)
+	{
+		cin >> a >> b;
+		cout << LCA(a, b) << endl;
+	}
 	return 0;
-}// 하는중
+}
