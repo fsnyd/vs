@@ -1,0 +1,138 @@
+#include <iostream>
+#include <string>
+using namespace std;
+char map[11][11];
+int R_x, R_y;
+int B_x, B_y;
+int G_x, G_y;
+int cnt = 0;
+int n, m;
+int pre = 5;
+void see(int n, int m)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+			cout << map[i][j];
+		cout << endl;
+	}
+}
+int move(int n)
+{
+	switch (n)
+	{
+	case 0:
+	{
+			  while (map[R_y][R_x - 1] != '#' && map[R_y][R_x - 1] != 'B')
+			  {
+				  R_x--;
+				  if (map[B_y][B_x - 1] != '#' && map[B_y][B_x - 1] != 'R')
+					  B_x--;
+				  if (R_x == G_x&&R_y == G_y)
+				  {
+					  cout << "end" << endl << cnt;
+					  return -1;
+				  }
+			  }
+			  return 0;
+	}
+	case 1:
+	{
+			  while (map[R_y][R_x + 1] != '#' && map[R_y][R_x + 1] != 'B')
+			  {
+				  R_x++;
+				  if (map[B_y][B_x + 1] != '#' && map[B_y][B_x + 1] != 'R')
+					  B_x++;
+				  if (R_x == G_x&&R_y == G_y)
+				  {
+					  cout << "end" << endl << cnt;
+					  return -1;
+				  }
+			  }
+			  return 1;
+	}
+	case 2:
+	{
+			  while (map[R_y- 1][R_x] != '#' && map[R_y-1][R_x] != 'B')
+			  {
+				  R_y--;
+				  if (map[B_y-1][B_x ] != '#' && map[B_y-1][B_x] != 'R')
+					  B_y--;
+				  if (R_x == G_x&&R_y == G_y)
+				  {
+					  cout << "end" << endl << cnt;
+					  return -1;
+				  }
+			  }
+			  return 2;
+	}
+	case 3:
+	{
+			  while (map[R_y + 1][R_x] != '#' && map[R_y + 1][R_x] != 'B')
+			  {
+				  R_y++;
+				  if (map[B_y + 1][B_x] != '#' && map[B_y + 1][B_x] != 'R')
+					  B_y++;
+				  if (R_x == G_x&&R_y == G_y)
+				  {
+					  cout << "end" << endl << cnt;
+					  return -1;
+				  }
+			  }
+			  return 3;
+	}
+	default:
+		return 100;
+	}
+}
+void func(int n)
+{
+	if (n == 0)
+	{
+		cout << "10 over" << endl;
+		return;
+	}
+	if (R_x == G_x && R_y == G_y)
+	{
+		cout << cnt << "goal" << endl;
+		return;
+	}
+	for (int i = 0; i < 4; i++)///(0 left 1 right 2 up 3 down)
+	{
+		if (pre == i)
+			continue;
+		pre = move(i);
+	}
+}
+int main()
+{
+	string line;
+	cin >> n >> m;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> line;
+		for (int j = 0; j < m; j++)
+		{
+			if (line[j] == 'R')
+			{
+				R_y = i;
+				R_x = j;
+			}
+			if (line[j] == 'B')
+			{
+				B_y = i;
+				B_x = j;
+			}
+			if (line[j] == 'O')
+			{
+				G_y = i;
+				G_x = j;
+			}
+			map[i][j] = line[j]; /// Y,X
+		}
+	}
+	func(10);
+
+	return 0;
+}
