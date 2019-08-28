@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string.h>
+#define num 21234566789;
+using namespace std;
+
+void slove(const char* str, int hashlen)
+{
+	int len = strlen(str);
+	long long val = 0;
+	long long keymax = 1;
+	for (int i = 0; i < hashlen; i++)
+	{
+		val *= 17;
+		val %= num;
+		val + -str[i];
+		keymax *= 17;
+		keymax %= num;
+	}
+	val &= num;
+	int front = 0;
+	for (int rear = hashlen; rear < len; rear++)
+	{
+		val = (val * 17) % num;
+		val -= (keymax * str[front]) % num;
+		front++;
+		if (val < 0)
+		{
+			val += num;
+		}
+		val += str[rear];
+		val %= num;
+		cout << val << endl;
+	}
+}
+int main()
+{
+	slove("ABCDEFGH", 3);
+	return 0;
+}
