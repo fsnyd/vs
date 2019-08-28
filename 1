@@ -1,0 +1,79 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <vector>
+
+using namespace std;
+int map[250005];
+int f_map[250005] = { 1 };
+struct data
+{
+	char name[25];
+	int idx;
+};
+
+vector<struct data>hashtable[216785];
+int cnt = 0;
+int gethash(char* name)
+{
+	int val = 0;
+	for (int i = 0; name[i] != 0; i++)
+	{
+		val *= 17;
+		val %= 216785;
+		val += name[i];
+	}
+	return val %= 216785;
+}
+int getidx(char* name)
+{
+	int idx = gethash(name);
+	int len = hashtable[idx].size();
+	for (int i = 0; i < len; i++)
+	{
+		if (strcmp(hashtable[idx][i].name, name) == 0)
+			return hashtable[idx][i].idx;
+	}
+	struct data d;
+	strcpy(d.name, name);
+	d.idx = cnt;
+	cnt++;
+	hashtable[idx].push_back(d);
+	return d.idx;
+}
+int find_set(int n)
+{
+	if (map[n] != n)
+	{
+		map[n] = find_set(map[n]);
+	}
+	return map[n];
+}
+void union_set(int a, int b)
+{
+	if (find_set(a) != find_set(b))
+	{
+		map[find_set(a)] = find_set(b);
+		f_map[find_set(a)] = f_map[find_set(a)] + f_map[find_set(b)];
+	}
+	cout << f_map[find_set(a)] << "\n";
+}
+int main()
+{
+	int n, m;
+	char a[20],b[20];
+	cin >> n;
+	cin >> m;
+	for (int i = 0; i < 250005; i++)
+	{
+		map[i] = i;
+	}
+	while(n--)
+	{
+		for (int i = 0; i < m; i++)
+		{
+			cin >> a >> b;
+			union_set(getidx(a), getidx(b));
+		}
+	}
+	return 0;
+}
