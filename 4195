@@ -1,61 +1,86 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <map>
+#include <vector>
+#include <string.h>
 using namespace std;
-map<string, int> nameDate;
-int idxCount = 0;
-int relation[100005];
+int map[250005];
+int f_map[250005];
+struct data
+{
+	char name[25];
+	int idx;
+};
+
+vector<struct data>hashtable[216785];
 int cnt = 0;
-int getIdx(string name)
+int gethash(char* name)
 {
-	if (nameDate.count(name) == 0)
+	int val = 0;
+	for (int i = 0; name[i] != 0; i++)
 	{
-		nameDate[name] = idxCount;
-		idxCount++;
-		return idxCount - 1;
+		val *= 17;
+		val %= 216785;
+		val += name[i];
 	}
-	return nameDate[name];
+	return val %= 216785;
 }
-void addName(string name)
+int getidx(char* name)
 {
-	nameDate[name] = idxCount;
-	idxCount++;
-}
-int find_set(int val)
-{
-	if (relation[val] != val)
-		relation[val] = find_set(relation[val]);
+	int idx = gethash(name);
+	int len = hashtable[idx].size();
+	for (int i = 0; i < len; i++)
+	{
+		if (strcmp(hashtable[idx][i].name, name) == 0)
+			return hashtable[idx][i].idx;
+	}
+	struct data d;
+	strcpy(d.name, name);
+	d.idx = cnt;
 	cnt++;
-	return relation[val];
+	hashtable[idx].push_back(d);
+	return d.idx;
 }
-void func(int a, int b)
+int find_set(int n)
 {
-	relation[find_set(a)] = find_set(b);
+	if (map[n] != n)
+	{
+		map[n] = find_set(map[n]);
+	}
+	return map[n];
+}
+void union_set(int a, int b)
+{
+	if (find_set(a) != find_set(b))
+	{
+		f_map[find_set(b)] = f_map[find_set(a)] + f_map[find_set(b)];
+		map[find_set(a)] = find_set(b);
+	}
+	printf("%d \n", f_map[find_set(b)]);
 }
 int main()
 {
 	int n, m;
-	int a, b;
-	string word1,word2;
-
-	cin >> n;
-	while (n)
+	char a[25], b[25];
+	scanf("%d", &n);
+	for (int i = 0; i < 250005; i++)
 	{
-		cin >> m;
-		for (int i = 1; i <= 2*m; i++)
+		map[i] = i;
+		f_map[i] = 1;
+	}
+	while (n--)
+	{
+		scanf("%d",&m);
+		for (int i = 0; i < m; i++) 
 		{
-			relation[i] = i;
+			scanf("%s %s", a, b);
+			int c = getidx(a), d = getidx(b);
+			union_set(c,d);
 		}
-		for (int i = 0; i < m; i++)
+		for (int i = 0; i < 250005; i++)
 		{
-			cnt = 0;
-			cin >> word1 >> word2;
-			a = getIdx(word1);
-			b = getIdx(word2);
-			func(b,a);
-			cout << cnt << endl;
+			map[i] = i;
+			f_map[i] = 1;
 		}
-		n--;
 	}
 	return 0;
 }
-////미완성
