@@ -1,0 +1,100 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+vector<int>map[200005];
+int visit[200005];
+int queue[200005];
+int front = -1;
+int rear = -1;
+int cr[200005];
+int cb[200005];
+int cnt = 0;
+void funR(int start);
+int isEmpty()
+{
+	if (rear == front)
+		return 1;
+	return 0;
+}
+void enqueue(int n)
+{
+	rear++;
+	queue[rear] = n;
+}
+int  dequeue()
+{
+	if (!isEmpty())
+	{
+		front++;
+		return queue[front];
+	}
+}
+void funR(int start)
+{
+	while (!isEmpty())
+	{
+		int a = dequeue();
+		for (int i = 0; i < map[a].size(); i++)
+		{
+			int pos = map[a].at(i);
+			if (!visit[pos])
+			{
+				enqueue(pos);
+				funR(pos);
+			}
+		}
+		if (cnt == 0)
+		{
+			cr[a] = 1;
+			cnt++;
+		}
+		else
+		{
+			cb[a] = 1;
+			cnt = 0;
+		}
+		visit[a] = 1;
+	}
+}
+int main()
+{
+	int n, m;
+	cin >> n;
+	while (n--)
+	{
+		int a, b;
+		cin >> m;
+		///input
+		for (int i = 0; i <= m; i++)
+		{
+			cr[i] = 0;
+			cb[i] = 0;
+		}
+		for (int i = 1; i < m; i++)
+		{
+			cin >> a >> b;
+			map[a].push_back(b);
+		}
+		enqueue(1);
+		funR(1);
+		///ready to re start
+		/*for (int i = 0; i < n; i++)
+		{
+			map[i].clear();
+		}*/
+	}
+	cout << "red point:" << "\n";
+	for (int i = 0; i <= m; i++)
+	{
+		if (cr[i])
+			cout << i << " ";
+	}
+	cout << endl;
+	cout << "blue point:" << "\n";
+	for (int i = 0; i <= m; i++)
+	{
+		if (cb[i])
+			cout << i << " ";
+	}
+	return 0;
+}
